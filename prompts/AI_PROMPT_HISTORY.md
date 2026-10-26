@@ -165,6 +165,6 @@ I reviewed the generated code and test results to the extent recorded in this pr
 
 ## 11. Completeness Status
 
-**Status: In progress.**
+**Status: Partial — original prompts still need recovery.**
 
-This log is not complete until all required original prompts have been recovered from the relevant conversation histories or AI tool records and entered verbatim. The section headings and descriptions above are a recording framework, not evidence that every listed prompt was actually submitted.
+This document is a disclosure framework and development summary, not a complete verbatim transcript of every AI interaction. The original prompt text and some dates/model details were not recoverable from the files included in this submission. Do not treat placeholder entries as exact prompts or as evidence that every listed prompt was submitted. Before submission, recover and insert original prompts from the relevant conversation histories or AI tool records if the assignment requires verbatim prompt disclosure. If they cannot be recovered, disclose that limitation honestly rather than fabricating prompt text.

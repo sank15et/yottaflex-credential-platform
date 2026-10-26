@@ -1,9 +1,25 @@
-﻿import csv
+import csv
 import hashlib
 import json
+import argparse
 from pathlib import Path
 
-DATA = Path("data/test-generated-v2")
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Validate the expected characteristics of generated anomaly fixtures."
+    )
+    parser.add_argument(
+        "--data-dir",
+        type=Path,
+        default=Path("data/generated-final"),
+        help="Directory containing anomaly_fixtures.json and credential.csv "
+             "(default: data/generated-final)",
+    )
+    return parser.parse_args()
+
+
+DATA = parse_args().data_dir
 
 def load_json(name):
     return json.loads((DATA / name).read_text(encoding="utf-8"))

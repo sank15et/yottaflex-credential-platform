@@ -15,15 +15,16 @@ This project is a Python/SQLite demonstration of a credential issuance lifecycle
 
 ## Integrity and lifecycle validation
 
-The following validations have been recorded for the smoke-test dataset:
-- SQL seed imported successfully into a fresh SQLite database.
+The full-scale generated dataset was imported into a fresh SQLite database and validated. The recorded full-scale checks reported:
+- SQL seed import passed.
 - `PRAGMA foreign_key_check` reported zero violations.
-- Credential issuance was not earlier than completion.
+- No credentials were issued before completion.
 - Issuance timestamps fell within issuer validity periods.
 - Revocation timestamps were not earlier than issuance.
 - Verification requests were not earlier than credential issuance.
+- No duplicate credential IDs or duplicate learner-course enrollment pairs were found.
 
-The full-scale generator completed successfully with the expected configured row counts. Repeat the SQL import and lifecycle checks against `data/generated-final` before treating those checks as full-scale validation evidence.
+The standalone lifecycle validator can be run against a database path, for example `python scripts/validate_lifecycle.py data/generated-final/full_validation.db`. The generated database itself is a local artifact and may not be included in a clean source-only repository or ZIP; if absent, import `data/generated-final/seed.sql` into a fresh database before running database checks.
 
 ## Anomaly coverage
 

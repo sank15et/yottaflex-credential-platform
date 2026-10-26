@@ -34,13 +34,15 @@ A Python/SQLite project for generating and validating a credential-issuance data
 ├── prompts/
 │   └── AI_PROMPT_HISTORY.md
 ├── scripts/
-│   └── validate_anomalies.py
+│   ├── validate_anomalies.py
+│   └── validate_lifecycle.py
 ├── src/
 │   ├── database.py
 │   ├── generator.py
 │   ├── main.py
 │   └── services.py
 ├── tests/
+│   ├── test_api.py
 │   └── test_services.py
 ├── schema.sql
 ├── requirements.txt
@@ -135,9 +137,10 @@ This test uses a separate `import_test.db` file. It does not replace the applica
 ```powershell
 python -m unittest discover -s tests -v
 python scripts/validate_anomalies.py
+python scripts/validate_lifecycle.py data/generated-final/import_test.db
 ```
 
-The latest recorded run passed all **9 service tests** and all **4 fixture checks**.
+The latest verified automated test run passed **14 tests**: 11 service tests and 3 API integration tests. The anomaly fixture validator passed all **4 fixture checks**. The lifecycle validator checks the supplied database for credentials issued before completion. Run the SQL-import command above first to create `data/generated-final/import_test.db`; pass that database path (or another database path) as the first argument to the lifecycle validator.
 
 The service tests cover:
 - Successful credential issuance.
@@ -188,7 +191,7 @@ This project includes an AI prompt-history document at `prompts/AI_PROMPT_HISTOR
 ## Before submission
 
 - [ ] Confirm `schema.sql` and `src/database.py` both define the same tables, including `enrollment`.
-- [ ] Run the unit tests and anomaly fixture validator from a clean checkout.
+- [ ] Install dependencies with `pip install -r requirements.txt`, then run the unit tests and anomaly fixture validator from a clean checkout. The fixture validator defaults to `data/generated-final`; use `--data-dir PATH` to validate another generated output directory.
 - [ ] Verify generated SQL import and `PRAGMA foreign_key_check` on a fresh database.
 - [ ] Check `source_manifest.json` and reproducibility on a smaller dataset.
 - [ ] Review `.gitignore` and ensure no secrets, virtual environments, temporary databases, or unnecessary large files are committed.
