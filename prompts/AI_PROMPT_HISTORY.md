@@ -109,23 +109,21 @@ The fixture validator checks the intended fixture characteristics. It does not b
 
 ## 7. Testing and Validation
 
-### Entry 10 — Unit tests
+### Entry 10 — Unit and API tests
 
-- **Date/time:** [Recover from original conversation]
-- **Tool/model:** ChatGPT / [model]
-- **Exact prompt submitted:** [Paste the original prompt verbatim.]
-- **AI output or code used:** [Identify test code or testing advice actually used.]
-- **What I changed or rejected:** [Describe actual changes.]
-- **How I validated it:** `python -m unittest discover -s tests -v` passed all 9 service tests in the recorded run.
+- **AI tool:** ChatGPT.
+- **Exact prompt:** Original prompt wording not yet recovered; see completeness disclosure.
+- **AI assistance:** Testing strategy and implementation/debugging assistance for service and API behavior, where applicable.
+- **Validation:** `python -m unittest discover -s tests -v` passed all 14 tests in the recorded run. A non-fatal Starlette/httpx deprecation warning was observed.
+- **Limitations:** This result applies to the recorded test run; it does not establish that every possible edge case has been tested.
 
 ### Entry 11 — Data lifecycle and foreign-key checks
 
-- **Date/time:** [Recover from original conversation]
-- **Tool/model:** ChatGPT / [model]
-- **Exact prompt submitted:** [Paste the original prompt verbatim.]
-- **AI output or code used:** [Identify the actual validation scripts or SQL queries used.]
-- **What I changed or rejected:** [Describe actual changes.]
-- **How I validated it:** The smoke-test database had zero foreign-key violations and zero violations across the four tested lifecycle rules. Run the same checks against the full-scale dataset before claiming full-scale validation.
+- **AI tool:** ChatGPT.
+- **Exact prompt:** Original prompt wording not yet recovered; see completeness disclosure.
+- **AI assistance:** Validation workflow and troubleshooting assistance, where applicable.
+- **Validation:** The full-scale database foreign-key check returned no violations. `scripts/validate_lifecycle.py` reported that no credentials were issued before completion. The anomaly fixture validator reported 4/4 fixture checks passed.
+- **Limitations:** The four fixture checks validate intended fixture characteristics; they do not prove end-to-end detection of every anomaly class.
 
 ## 8. Documentation and GitHub
 
@@ -146,6 +144,17 @@ The fixture validator checks the intended fixture characteristics. It does not b
 - **AI output or code used:** Git initialization, `.gitignore` review, commit, remote setup, and push instructions.
 - **What I changed or rejected:** [Describe actual changes.]
 - **How I validated it:** Initial commit `5c04ebb` was created, and the `main` branch was pushed to the configured GitHub remote.
+
+### Entry 14 — Deterministic dataset reproducibility
+
+- **AI tool:** ChatGPT.
+- **Date/time:** 26 October 2026; consult the original conversation for the exact prompt timestamp.
+- **Exact prompt:** Original prompt wording not yet recovered; see completeness disclosure.
+- **AI assistance:** Guidance for comparing two generated datasets and documenting reproducibility.
+- **Configuration:** Seed `20261022`; 20,000 learners; 1,000 courses; 10,000 credentials; 5,000 verification requests.
+- **Validation:** Generated datasets in `data/repro-run-1` and `data/repro-run-2` using identical parameters. Compared row counts and SHA-256 hashes of corresponding files. All 26 corresponding files were identical, and all generated entity counts matched.
+- **Limitations:** This establishes reproducibility for the tested seed, configuration, and code revision; it does not establish identical results for every possible configuration or environment.
+
 
 ## 9. Other AI Tools
 
