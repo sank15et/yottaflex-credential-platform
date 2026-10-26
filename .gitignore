@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+data/*.db
+data/generated/
+.pytest_cache/
+.env
+
+# Generated datasets and temporary validation outputs
+data/generated*/
+data/test-generated*/
+data/enrollment-smoke/
+data/*/import_test.db
