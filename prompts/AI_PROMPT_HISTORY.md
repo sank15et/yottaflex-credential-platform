@@ -1,59 +1,170 @@
-# AI Prompt History
+# AI Prompt History — YottaFlex Credential Platform
 
-## Purpose
+## 1. Project Information
 
-This document records AI assistance used during the YottaFlex Credential Platform project. The assignment requires disclosure of prompts submitted to AI tools. Exact prompts must be copied from the original conversations or tool histories; summaries must not be presented as verbatim prompts.
+- **Project:** YottaFlex Credential Platform
+- **AI tool used:** ChatGPT
+- **Model:** Record the model shown in each relevant conversation.
+- **Development period:** October 2026, plus earlier dates for relevant conversations.
+- **Purpose:** To disclose AI assistance used during project development, including prompts, generated suggestions or code, modifications, and validation.
 
-## AI Tool Used
+## 2. Project Requirements and Planning
 
-- Tool: ChatGPT
-- Model: Record the model shown in the relevant conversation, where known.
-- Dates: October 2026 for the development work documented in the available project history. Add exact timestamps from the original conversations where required.
+### Entry 1 — Requirements analysis
 
-## Development Areas Assisted by AI
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** Requirements breakdown, entity identification, implementation planning, or project structure, as applicable.
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Compared the proposed plan against the official project brief.
 
-The project history shows AI assistance relating to the following areas. These entries describe work areas, not verbatim prompts.
+## 3. Database Schema and Data Model
 
-1. Project planning and requirements interpretation.
-2. Credential platform database schema and entity relationships.
-3. Python service logic for issuing, verifying, and revoking credentials.
-4. Synthetic dataset generation and deterministic output.
-5. Enrollment bridge table integration.
-6. Anomaly fixtures and ground-truth validation.
-7. Unit testing and lifecycle validation.
-8. Documentation, reproducibility, and Git setup.
+### Entry 2 — Database design
 
-## Exact Prompt Log
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Record actual schema or relationship suggestions used.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Schema inspection, SQL import, and foreign-key checks, as applicable.
 
-For every AI interaction used in the project, add an entry in this format:
+### Entry 3 — Enrollment bridge table
 
-### Entry [number]
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** Enrollment table design and generator integration, if applicable.
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Confirmed 65 enrollment IDs and 65 unique learner-course pairs in the smoke test. The SQL import also passed with zero foreign-key violations.
 
-- Date/time:
-- Tool/model:
-- Exact prompt submitted: [Paste the original prompt verbatim.]
-- AI output or code used: [Identify the response, code, or suggestions used.]
-- What I changed or rejected: [Describe your actual review and modifications.]
-- How I validated it: [Record the real test, command, or manual check and its result.]
+## 4. Python Service Implementation
 
-Repeat this entry for each relevant interaction, including interactions with other AI tools.
+### Entry 4 — Credential issuance
 
-## Validation Evidence
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Identify the actual service implementation or suggestions used.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Service unit tests, including successful issuance, duplicate prevention, and completion-timestamp validation.
 
-Record actual results rather than anticipated results. Current project test results recorded in the development conversation include:
+### Entry 5 — Credential verification and payload integrity
 
-- Service unit tests: 9 passed.
-- Anomaly fixture validator: 4 of 4 fixture checks passed.
-- Smoke-test SQL import: passed.
-- Smoke-test SQLite foreign-key check: 0 violations.
-- Smoke-test lifecycle checks: 0 violations across the four tested rules.
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Record actual verification and hash-checking assistance.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Unit test for tampered payload detection and missing credential verification.
 
-These results establish the reported checks only; they do not mean every anomaly fixture has been tested end-to-end through the API.
+### Entry 6 — Credential revocation
 
-## Author Review and Responsibility
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Record actual revocation-related assistance.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Tests for revocation and subsequent verification.
 
-I am responsible for reviewing and understanding all submitted code. Before submission, I will verify that the implementation, assumptions, test results, and limitations are accurately described and that this history includes all required prompts.
+## 5. Synthetic Data Generator
 
-## Completeness Notice
+### Entry 7 — Deterministic data generation
 
-This document is not a complete verbatim prompt history until all relevant original prompts have been recovered and entered. Do not submit it as complete until that task is finished.
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Record generator code, data-volume logic, or export logic actually used.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Ran the generator with seed `20261022` and checked generated row counts.
+
+### Entry 8 — CSV, JSON, and SQL exports
+
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Identify export implementation used.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Checked the generated output files and imported `seed.sql` into a fresh SQLite database.
+
+## 6. Anomaly Fixtures and Ground Truth
+
+### Entry 9 — Required anomaly cases
+
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Record actual fixture or validator assistance.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** `python scripts/validate_anomalies.py` reported 4/4 fixture checks passed.
+
+The four fixture cases are:
+1. `ISSUED_BEFORE_COMPLETION`
+2. `DUPLICATE_CREDENTIAL_ID`
+3. `REVOKED_VERIFIES_ACTIVE`
+4. `ALTERED_HASH_NOT_DETECTED`
+
+The fixture validator checks the intended fixture characteristics. It does not by itself prove all four cases have been exercised end-to-end through the application.
+
+## 7. Testing and Validation
+
+### Entry 10 — Unit tests
+
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Identify test code or testing advice actually used.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** `python -m unittest discover -s tests -v` passed all 9 service tests in the recorded run.
+
+### Entry 11 — Data lifecycle and foreign-key checks
+
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** [Identify the actual validation scripts or SQL queries used.]
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** The smoke-test database had zero foreign-key violations and zero violations across the four tested lifecycle rules. Run the same checks against the full-scale dataset before claiming full-scale validation.
+
+## 8. Documentation and GitHub
+
+### Entry 12 — README and assumptions
+
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** README, data dictionary, and assumptions/limitations documentation, where applicable.
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Reviewed file contents and checked documented commands against the recorded test results.
+
+### Entry 13 — Git and GitHub setup
+
+- **Date/time:** [Recover from original conversation]
+- **Tool/model:** ChatGPT / [model]
+- **Exact prompt submitted:** [Paste the original prompt verbatim.]
+- **AI output or code used:** Git initialization, `.gitignore` review, commit, remote setup, and push instructions.
+- **What I changed or rejected:** [Describe actual changes.]
+- **How I validated it:** Initial commit `5c04ebb` was created, and the `main` branch was pushed to the configured GitHub remote.
+
+## 9. Other AI Tools
+
+For every additional AI tool used, record:
+- Tool and model.
+- Date/time.
+- Exact prompt submitted.
+- Output or code used.
+- Changes made.
+- Validation performed.
+
+Do not omit tools simply because their output was not used in the final implementation if the assignment requires all prompts to be disclosed.
+
+## 10. Author Review and Responsibility
+
+I reviewed the generated code and test results to the extent recorded in this project history. I am responsible for understanding the implementation, verifying the claims in the documentation, and explaining the design decisions, assumptions, trade-offs, and limitations.
+
+## 11. Completeness Status
+
+**Status: In progress.**
+
+This log is not complete until all required original prompts have been recovered from the relevant conversation histories or AI tool records and entered verbatim. The section headings and descriptions above are a recording framework, not evidence that every listed prompt was actually submitted.
