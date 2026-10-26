@@ -1,6 +1,7 @@
 
 import tempfile
 import unittest
+import sqlite3
 from pathlib import Path
 from datetime import date, datetime, timezone
 from unittest.mock import patch
@@ -199,7 +200,6 @@ class ServiceTests(unittest.TestCase):
         self.assertNotEqual(verification["result"], "VALID")
 
     def test_credential_id_collision_uses_next_available_id(self):
-        # Create a second learner and completion for a seeded credential.
         services.create_learner(
             "LRN-000002",
             "Rohan Shah",
@@ -219,7 +219,6 @@ class ServiceTests(unittest.TestCase):
         year = datetime.now(timezone.utc).year
         colliding_id = f"CRD-{year}-000002"
 
-        # Seed an existing credential with the ID the next issue would try.
         with database.connect(self.db) as conn:
             payload = services.canonical_json({
                 "credential_id": colliding_id,
@@ -257,8 +256,6 @@ class ServiceTests(unittest.TestCase):
                 ),
             )
 
-        # There is one existing credential, so the initial candidate is
-        # 000002. The service must skip it and select 000003.
         result = services.issue_credential(
             "LRN-000001",
             "CRS-000001",
@@ -274,6 +271,62 @@ class ServiceTests(unittest.TestCase):
             result["credential_id"],
             colliding_id,
         )
+
+    def test_duplicate_credential_id_rejected_by_database(self):
+        result = services.issue_credential(
+            "LRN-000001",
+            "CRS-000001",
+            "ISS-000001",
+        )
+
+        with database.connect(self.db) as conn:
+            row = conn.execute(
+                "SELECT * FROM credential WHERE credential_id = ?",
+                (result["credential_id"],),
+            ).fetchone()
+
+            with self.assertRaises(sqlite3.IntegrityError):
+                conn.execute(
+                    """
+                    INSERT INTO credential (
+                        credential_id, learner_id, course_id, completion_id,
+                        issuer_id, issued_at, payload_json, payload_hash,
+                        signature_metadata, status
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        row["credential_id"],
+                        row["learner_id"],
+                        row["course_id"],
+                        row["completion_id"],
+                        row["issuer_id"],
+                        row["issued_at"],
+                        row["payload_json"],
+                        row["payload_hash"],
+                        row["signature_metadata"],
+                        row["status"],
+                    ),
+                )
+
+    def test_issuance_rejects_completion_timestamp_after_issue_time(self):
+        future = "2999-01-01T00:00:00+00:00"
+
+        with database.connect(self.db) as conn:
+            conn.execute(
+                """
+                UPDATE completion_record
+                SET completed_at = ?
+                WHERE completion_id = ?
+                """,
+                (future, "CMP-LRN-000001-CRS-000001"),
+            )
+
+        with self.assertRaisesRegex(ValueError, "future"):
+            services.issue_credential(
+                "LRN-000001",
+                "CRS-000001",
+                "ISS-000001",
+            )
 
 
 if __name__ == "__main__":
