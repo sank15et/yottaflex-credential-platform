@@ -176,13 +176,34 @@ Use only synthetic or otherwise approved test data. Do not expose a development 
 
 - SHA-256 payload hashing detects payload changes when the stored hash is trusted and recomputed during verification.
 - A hash is **not** a digital signature and does not prove who issued a credential.
-- The `signature_metadata` field is metadata, not a cryptographic signature.
+- The `signature metadata` field is metadata, not a cryptographic signature.
 - This project is a synthetic-data/demo implementation, not a production credential service.
 - Review `docs/ASSUMPTIONS_AND_LIMITATIONS.md` before interpreting results.
 
-## Reproducibility
+## Reproducibility Validation
 
-Use the same Python version, seed, command-line parameters, and code revision when comparing generated data. `source_manifest.json` records file hashes for integrity verification. Do not edit generated files manually if you need reproducible checksums.
+The full-scale dataset was generated twice using the same generator configuration and random seed.
+
+**Configuration**
+- Seed: `20261022`
+- Learners: `20,000`
+- Courses: `1,000`
+- Credentials: `10,000`
+- Verification requests: `5,000`
+
+**Validation procedure**
+1. Generated the dataset into `data/repro-run-1`.
+2. Generated it again into `data/repro-run-2` with identical parameters.
+3. Compared the SHA-256 checksums of corresponding output files.
+4. Compared the generated row counts.
+
+**Results**
+- All 26 corresponding output files had identical SHA-256 checksums.
+- Both runs produced identical row counts for all generated entities.
+- The generator demonstrated deterministic output for the tested seed and configuration.
+
+The reproducibility comparison was performed locally. The generated comparison directories are not required to be committed to the repository.
+
 
 ## AI-assisted development disclosure
 
